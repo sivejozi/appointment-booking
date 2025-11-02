@@ -65,7 +65,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentDTO updateAppointment(Long id, AppointmentDTO dto) {
+    public AppointmentDTO updateAppointment(Long id, AppointmentDTO dto, Boolean pushEvent) {
         Optional<AppointmentModel> optional = appointmentRepository.findById(id);
         if (optional.isEmpty()) {
             logger.warn("Attempted to update non-existing appointment with id {}", id);
@@ -98,7 +98,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         //issue event
         AppointmentDTO appointmentDTO = convertEntityToDTO(saved);
 
-        if (!Objects.isNull(appointmentDTO)) {
+        if (pushEvent && !Objects.isNull(appointmentDTO)) {
             MessageDTO message = new MessageDTO("booking system", "notification trigger", "appointment-updated",
                     LocalDateTime.now(), UUID.randomUUID().toString(), "appointment successfully updated", new DataDTO(appointmentDTO));
             notificationProducerService.publishEvent(message);

@@ -71,15 +71,16 @@ public class AppointmentController {
     }
 
     // Needs auth + admin
-    @PutMapping("update/{id}")
+    @PutMapping("update/{id}/{pushEvent}")
     public ResponseEntity<AppointmentDTO> update(
             @PathVariable Long id,
+            @PathVariable Boolean pushEvent,
             @RequestBody AppointmentDTO appointmentDTO,
             @RequestHeader("X-User-Roles") String rolesHeader) {
 
         if (!isAdmin(rolesHeader)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(appointmentService.updateAppointment(id, appointmentDTO));
+        return ResponseEntity.ok(appointmentService.updateAppointment(id, appointmentDTO, pushEvent));
     }
 }
