@@ -6,21 +6,6 @@ The frontend is built using **React** and **Node.js** (Node version **v25.1.0**)
 
 ---
 
-### How to Run the Frontend
-
-1. Navigate to the root folder of the project:
-
-   ```bash
-   cd booking-system-ui
-
-2. Install dependencies:
-   ```bash
-   npm install
-
-3. Start the application:
-   ```bash
-   npm start
-
 Landing Page
 
 The landing screen is the Appointment Booking page where users can book an appointment will be available on http://localhost:3000
@@ -53,7 +38,8 @@ Tech Stack Summary
 
 ## Backend
 
-The backend is built using **Java Spring Boot** following a **microservice architecture** pattern.  
+The backend is built using **Java Spring Boot** following a **microservice architecture** pattern and events based,
+for intercommunication between the microservices.
 Each service is containerized using **Docker** and registered dynamically with **Eureka Discovery Server**.
 
 ---
@@ -106,7 +92,9 @@ Each service is containerized using **Docker** and registered dynamically with *
 - Listens to **Kafka topics** (e.g., `booking-events`) and sends notifications or triggers asynchronous tasks.
 - Example: Sends an email or confirmation event when a booking is created or updated.
 - Registered as an **Eureka client**.
+- Currently, the system logs out a simulated email, that looks like:
 
+![simulatedEmail.png](images/simulatedEmail.png)
 ---
 
 #### **7. Database (PostgreSQL)**
@@ -151,19 +139,31 @@ Each service is containerized using **Docker** and registered dynamically with *
 - Improves performance by reducing database load.
 - Can be used to cache tokens, user sessions, or booking lookups.
 
-### Building and Running the Backend
+### Building and Running the System Using Docker
 
-1. All microservices are built using maven
-   
+1. Build each microservice using maven
+
     ```bash
    mvn clean install -U
-   
-2. Run all microservices (from ide)
-   ![apps.png](images/apps.png)
 
-3. Eureka server available at: http://localhost:8061/
+2. Change directory to root folder "appointment-booking"
+   
+    ```bash
+   docker compose up -d
+   
+This will set up all that is needed for the system(postgres-db, kafka, kafka-ui, runs all the backend microservices as well 
+as the system's frontend app)
+
+![dockerCompose.png](images/dockerCompose.png)
+
+2. Eureka server available at: http://localhost:8061/
 ![architecture.png](images/eureka.png)
 
+3. To stop the app
+
+   ```bash
+   docker compose down
+   
 ### API's
 
 All api calls go via gateway (port 8082), routing handled in the gateway service.
@@ -233,7 +233,7 @@ All api calls go via gateway (port 8082), routing handled in the gateway service
 
 6. Delete Appointment:
 
-   curl --location --request DELETE 'http://localhost:8080/api/appointments/10'
+   curl --location --request DELETE 'http://localhost:8082/api/appointments/10'
 
 
 

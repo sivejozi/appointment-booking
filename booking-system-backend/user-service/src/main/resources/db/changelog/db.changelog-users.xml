@@ -54,4 +54,22 @@
             <column name="name" value="ROLE_CLIENT"/>
         </insert>
     </changeSet>
+
+    <changeSet author="Sive" id="3">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Admin"/>
+            <column name="surname" value="Admin"/>
+            <column name="email" value="sivejozi@gmail.com"/>
+            <column name="cellphone" value="0112587896"/>
+            <column name="password" value="$2a$10$ELAVktNV6irYR0OAG2VDJeODCruX1.vOvsNdkj6aQXXKBLHsZNRfG"/>
+            <column name="confirm_password" value="$2a$10$g63w7ARA/LDmxKj4/nPSJunG/6kc1JINRIbssJqR7wRv8.4I.y5Py"/>
+            <column name="title" value="Mr"/>
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="role_id" valueComputed="(SELECT id FROM roles WHERE name = 'ROLE_ADMIN')"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
