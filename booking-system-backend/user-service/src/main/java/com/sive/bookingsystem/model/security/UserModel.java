@@ -37,7 +37,7 @@ public class UserModel {
     private Set<RoleModel> roles;
 
     public UserModel(Long id, String title, String name, String surname, String cellphone, String email, String password,
-                     String confirmPassword/**/, UserType type, Set<RoleModel> roles) {
+                     String confirmPassword, UserType type, Set<RoleModel> roles) {
         this.id = id;
         this.title = title;
         this.name = name;

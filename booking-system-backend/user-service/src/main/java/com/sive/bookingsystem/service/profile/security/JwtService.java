@@ -39,7 +39,7 @@ public class JwtService {
 
     public String generateToken(String username, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", roles); // <-- include roles
+        claims.put("roles", roles);
         Date now = new Date();
         Date expiry = new Date(now.getTime() + 3600000); // 1 hour
 
