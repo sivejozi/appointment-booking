@@ -1,5 +1,6 @@
 services:
 
+  # Database
   postgres:
     image: postgres:16
     container_name: postgres
@@ -51,7 +52,7 @@ services:
     volumes:
       - ./kafka-data:/var/lib/kafka/data
 
-  # --- Kafka UI ---
+  # Kafka UI
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka_ui
@@ -63,6 +64,7 @@ services:
     depends_on:
       - kafka
 
+  # Backend Services
   discovery-service:
     build: ./booking-system-backend/discovery-service
     container_name: discovery-service
@@ -136,7 +138,7 @@ services:
       retries: 10
       start_period: 15s
 
-  # --- Frontend (React) ---
+  # Frontend
   booking-ui:
     build:
       context: ./booking-system-ui
